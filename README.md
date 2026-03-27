@@ -22,5 +22,5 @@ P.S.
 
 - C++23
 - Boost.Asio&Boost.Beast（网络通信、定时器）
-- nlohmann/json（可选，用于 JSON 格式消息）
+- nlohmann/json（用于 JSON 格式消息）
 - Visual Studio（构建系统）
