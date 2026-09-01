@@ -1,4 +1,4 @@
-# P2P 聊天室
+# dechat聊天室
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![C++17](https://img.shields.io/badge/C%2B%2B-17-blue)](https://isocpp.org/)
