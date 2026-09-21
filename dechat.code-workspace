@@ -1,0 +1,40 @@
+{
+  "folders": [
+    {
+      "path": "./"
+    }
+  ],
+  "settings": {
+    "cmake.useCMakePresets": "always",
+    "cmake.buildDirectory": "${workspaceFolder}/build",
+    "cmake.configureOnOpen": true,
+    "cmake.buildBeforeRun": true,
+    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+    "C_Cpp.intelliSenseEngine": "disabled",
+    "clangd.path": "C:/Program Files/LLVM/bin/clangd.exe",
+    "clangd.arguments": [
+      "--background-index",
+      "--clang-tidy",
+      "--query-driver=D:/Dev-Cpp/MinGW64/mingw64/bin/g++.exe",
+    ],"editor.tabSize": 4,
+    "C_Cpp.default.compilerPath": "D:/Dev-Cpp/MinGW64/mingw64/bin/g++.exe",
+    "C_Cpp.default.includePath": [
+      "${workspaceFolder}/build/mingw-ninja-debug/qt_json_demo_autogen/include",
+      "${workspaceFolder}/external/nlohmann_json/include",
+      "F:/ProgramData/Dev-Cpp/Qt/6.11.2/mingw_64/include",
+      "F:/ProgramData/Dev-Cpp/Qt/6.11.2/mingw_64/include/QtCore",
+      "F:/ProgramData/Dev-Cpp/Qt/6.11.2/mingw_64/include/QtGui",
+      "F:/ProgramData/Dev-Cpp/Qt/6.11.2/mingw_64/include/QtWidgets",
+      "F:/ProgramData/Dev-Cpp/Qt/6.11.2/mingw_64/mkspecs/win32-g++",
+      "D:\\Dev-Cpp\\SFML-3.1.0\\include"
+    ],"C_Cpp.default.intelliSenseMode": "windows-gcc-x64",
+    "C_Cpp.intelliSenseMemoryLimit": 4096
+  },
+  "extensions": {
+    "recommendations": [
+      "ms-vscode.cmake-tools",
+      "ms-vscode.cpptools",
+      "llvm-vs-code-extensions.vscode-clangd"
+    ]
+  }
+}

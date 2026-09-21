@@ -1,10 +1,9 @@
 cmake_minimum_required(VERSION 3.16)
 
 project(dechat)
-site_name(https://www.github.com/ywxc12/dechat)
 set(QT_ROOT F:/ProgramData/Dev-Cpp/Qt)
 list(APPEND CMAKE_PREFIX_PATH ${QT_ROOT})
-
+set(CMAKE_EXPORT_COMPILE_COMMANDS true)
 find_package(Qt6 REQUIRED COMPONENTS Quick Core Gui Network)
 add_executable(dechat
     main.cpp

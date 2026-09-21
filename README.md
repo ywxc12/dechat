@@ -11,7 +11,7 @@
 - **UDP广播入室** 使用UDP广播和ID系统（即每个聊天室都有id）实现加入操作
 - **自动故障转移** – 房主断开连接时，备选房主自动接替。
 - **使用websocket**- 为了保证能检测死连接，使用websocket
-- **使用Qt,boost** 吾去TGUi更不好用,Qt我又回来了without QtCreator
+- **使用Qt,boost** 吾去TGUI更不好用,Qt我又回来了without QtCreator
 
 P.S.
 欢迎感兴趣的朋友加入我们
