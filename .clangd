@@ -1,5 +1,5 @@
 CompileFlags:
-  CompilationDatabase: build/mingw-ninja-debug
+  CompilationDatabase: out/build/mingw-ninja-debug/
 Index:
   Background: Build
 

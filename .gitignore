@@ -6,3 +6,6 @@
 /build/
 /.vscode/
 /.cache/
+/out/
+*.code-workspace
+/dechat.code-workspace
