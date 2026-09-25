@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
+<<<<<<< HEAD
 project(dechat VERSION 1.0.0 LANGUAGES CXX)
 
 # ==================== 全局编译设置 ====================
@@ -27,6 +28,12 @@ elseif(EXISTS "D:/Dev-Cpp/Contributes/boost_1_92_0")
     set(BOOST_ROOT "D:/Dev-Cpp/Contributes/boost_1_92_0")
 endif()
 
+=======
+project(dechat)
+set(QT_ROOT F:/ProgramData/Dev-Cpp/Qt)
+list(APPEND CMAKE_PREFIX_PATH ${QT_ROOT})
+set(CMAKE_EXPORT_COMPILE_COMMANDS true)
+>>>>>>> 7ae26c5d747ed92f42f3264de77c3feee25b571f
 find_package(Qt6 REQUIRED COMPONENTS Quick Core Gui Network)
 find_package(Boost REQUIRED)
 
