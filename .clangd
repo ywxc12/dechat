@@ -1,16 +1,11 @@
 CompileFlags:
-<<<<<<< HEAD
   CompilationDatabase: out/build/mingw-ninja-debug/
-=======
-  CompilationDatabase: build/mingw-ninja-debug
->>>>>>> 7ae26c5d747ed92f42f3264de77c3feee25b571f
 Index:
   Background: Build
 
 Diagnostics:
   ClangTidy:
-    Add: [bugprone-*, performance-*, readability-*]
-    Remove: [readability-magic-numbers]
+    Add: [bugprone-*]
 
 Completion:
   AllScopes: Yes

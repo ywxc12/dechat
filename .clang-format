@@ -1,1 +1,6 @@
-TabSize=4
+# 这是注释，以 # 开头
+BasedOnStyle: LLVM    # 基于 Google 预设风格，在此基础上修改
+IndentWidth: 4          # 覆盖预设的缩进宽度为 4 个空格
+
+Language: Cpp
+ColumnLimit: 56        # C++ 代码行宽限制为 120

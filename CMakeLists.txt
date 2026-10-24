@@ -1,7 +1,20 @@
+# ============================================================
+# 最低 CMake 版本要求
+# ============================================================
 cmake_minimum_required(VERSION 3.16)
 
-<<<<<<< HEAD
+# ============================================================
+# 项目定义
+# ============================================================
 project(dechat VERSION 1.0.0 LANGUAGES CXX)
+
+# 显式使用新版 CMake 策略（消除 CMP0144 / CMP0167 警告）
+if(POLICY CMP0144)
+    cmake_policy(SET CMP0144 NEW)
+endif()
+if(POLICY CMP0167)
+    cmake_policy(SET CMP0167 NEW)
+endif()
 
 # ==================== 全局编译设置 ====================
 set(CMAKE_CXX_STANDARD 23)
@@ -13,71 +26,43 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
     set(CMAKE_BUILD_TYPE Release CACHE STRING "" FORCE)
 endif()
 
-# ==================== 查找 Qt ====================
+message("Configure start")
+
+# ==================== 全局路径配置 ====================
+# MinGW 路径（用于找 OpenSSL 等第三方库）
+set(MINGW_ROOT "D:/Dev-Cpp/MinGW64/mingw64" CACHE PATH "MinGW Root")
+
+# ==================== 查找 Qt6 ====================
 if(DEFINED ENV{QT_ROOT})
     list(APPEND CMAKE_PREFIX_PATH "$ENV{QT_ROOT}")
 elseif(EXISTS "F:/ProgramData/Dev-Cpp/Qt")
     list(APPEND CMAKE_PREFIX_PATH "F:/ProgramData/Dev-Cpp/Qt")
 endif()
 
+# 【重点】必须加入 Qml 组件，否则 qt_add_qml_module 会报错
+find_package(Qt6 REQUIRED COMPONENTS Quick Core Gui Network Qml)
+# 在根目录 CMakeLists.txt 中，find_package(Qt6 ...) 之后添加：
+qt_standard_project_setup(REQUIRES 6.5)
 # ==================== 查找 Boost ====================
-# 修正语法：加上 $ 符号
 if(DEFINED ENV{BOOST_HOME})
     set(BOOST_ROOT $ENV{BOOST_HOME})
 elseif(EXISTS "D:/Dev-Cpp/Contributes/boost_1_92_0")
     set(BOOST_ROOT "D:/Dev-Cpp/Contributes/boost_1_92_0")
+else()
+    message(FATAL_ERROR "找不到 Boost 目录，请设置 BOOST_HOME 环境变量")
 endif()
 
-=======
-project(dechat)
-set(QT_ROOT F:/ProgramData/Dev-Cpp/Qt)
-list(APPEND CMAKE_PREFIX_PATH ${QT_ROOT})
-set(CMAKE_EXPORT_COMPILE_COMMANDS true)
->>>>>>> 7ae26c5d747ed92f42f3264de77c3feee25b571f
-find_package(Qt6 REQUIRED COMPONENTS Quick Core Gui Network)
-find_package(Boost REQUIRED)
+# 【重点】因为只用头文件，直接建一个虚拟库绕开 find_package 的严苛检查
+if(NOT TARGET Boost_headers)
+    add_library(Boost_headers INTERFACE)
+    target_include_directories(Boost_headers INTERFACE ${BOOST_ROOT})
+endif()
 
-# ==================== MinGW 路径 ====================
-set(MINGW_ROOT "D:/Dev-Cpp/MinGW64/mingw64")
-
-# ==================== 可执行目标 ====================
-qt_add_executable(dechat
-    src/main.cpp
-    src/CoreControl.hpp
-    src/main.qml
-    src/InputMethod.hpp
-    src/SSLContext.hpp
-    src/Server.hpp
-    src/Config.hpp
-)
-
-# ==================== 头文件路径 ====================
-target_include_directories(dechat PRIVATE
-    ${MINGW_ROOT}/opt/include
-    ${BOOST_ROOT}
-    third-party/
-)
-
-# ==================== 链接库 ====================
-target_link_libraries(dechat PRIVATE
-    Qt6::Quick
-    Qt6::Core
-    Qt6::Gui
-    Qt6::Network
-    Boost::headers
-)
-
-# ⭐ 关键修复：OpenSSL 静态库 + 它所有寄生依赖
-target_link_libraries(dechat PRIVATE
-    ${MINGW_ROOT}/opt/lib/libssl.a
-    ${MINGW_ROOT}/opt/lib/libcrypto.a
-    z            # ← zlib：解决 inflate/deflate 未定义
-    crypt32      # ← Windows 证书 API：解决 CertOpenSystemStoreW 未定义
-    ws2_32       # ← Windows Socket：OpenSSL 网络层需要
-    gdi32        # ← Windows GDI：OpenSSL 加密时可能用到
-)
-
-# ==================== Windows 部署 ====================
+# ==================== 添加子目录 ====================
+add_subdirectory(src/server)
+add_subdirectory(src/client)
+add_subdirectory(src/tools/CAGen)
+# ==================== Windows 部署 (通用) ====================
 if(WIN32)
     find_program(WINDEPLOYQT_EXECUTABLE
         NAMES windeployqt.exe
@@ -85,24 +70,23 @@ if(WIN32)
     )
 
     if(WINDEPLOYQT_EXECUTABLE)
-        set(DEPLOY_DIR "${CMAKE_BINARY_DIR}/portable")
-        add_custom_target(deploy
-            COMMAND "${CMAKE_COMMAND}" -E rm -rf "${DEPLOY_DIR}"
-            COMMAND "${CMAKE_COMMAND}" -E make_directory "${DEPLOY_DIR}"
+        # 客户端部署目标
+        set(DEPLOY_DIR_CLIENT "${CMAKE_BINARY_DIR}/portable/client")
+        add_custom_target(deploy_client
+            COMMAND "${CMAKE_COMMAND}" -E rm -rf "${DEPLOY_DIR_CLIENT}"
+            COMMAND "${CMAKE_COMMAND}" -E make_directory "${DEPLOY_DIR_CLIENT}"
             COMMAND "${WINDEPLOYQT_EXECUTABLE}"
-                "$<TARGET_FILE:dechat>"
-                --dir "${DEPLOY_DIR}"
+                "$<TARGET_FILE:dechat_client>"
+                --dir "${DEPLOY_DIR_CLIENT}"
                 --no-translations
-                --qmldir "${CMAKE_SOURCE_DIR}/src"   # ← 注意这里改成目录，不是单个文件
+                --qmldir "${CMAKE_SOURCE_DIR}/src/client"
                 --compiler-runtime
             COMMAND "${CMAKE_COMMAND}" -E copy_if_different
-                "$<TARGET_FILE:dechat>"
-                "${DEPLOY_DIR}/$<TARGET_FILE_NAME:dechat>"
-            DEPENDS dechat
-            COMMENT "Deploying Qt application"
+                "$<TARGET_FILE:dechat_client>"
+                "${DEPLOY_DIR_CLIENT}/$<TARGET_FILE_NAME:dechat_client>"
+            DEPENDS dechat_client
+            COMMENT "Deploying Qt Client"
             VERBATIM
         )
-    else()
-        message(WARNING "windeployqt.exe not found; deploy target is unavailable")
     endif()
 endif()
