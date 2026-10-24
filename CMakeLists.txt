@@ -52,7 +52,7 @@ else()
     message(FATAL_ERROR "找不到 Boost 目录，请设置 BOOST_HOME 环境变量")
 endif()
 
-# 【重点】因为只用头文件，直接建一个虚拟库绕开 find_package 的严苛检查
+# 因为只用头文件，直接建一个虚拟库绕开 find_package 的严苛检查
 if(NOT TARGET Boost_headers)
     add_library(Boost_headers INTERFACE)
     target_include_directories(Boost_headers INTERFACE ${BOOST_ROOT})
