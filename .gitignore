@@ -9,3 +9,15 @@
 /out/
 *.code-workspace
 /dechat.code-workspace
+# 构建产物
+build/
+out/
+
+# 证书和私钥（绝对不能推！）
+*.key
+*.crt
+*.pem
+
+# IDE 配置文件
+.vscode/
+.cache/

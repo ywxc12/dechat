@@ -1,7 +1,7 @@
 # DeChat Chatroom
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![C++17](https://img.shields.io/badge/C++-17-blue)](https://isocpp.org/)
+[![License](https://img.shields.io/badge/license-GPL-blue.svg)](LICENSE)
+[![C++23](https://img.shields.io/badge/C++-23-blue)](https://isocpp.org/)
 [![Boost.Asio](https://img.shields.io/badge/Boost-Asio-green)](https://www.boost.org/doc/libs/1_85_0/doc/html/boost_asio.html)
 
 A decentralized peer-to-peer (P2P) chatroom built with modern C++ (super handy) and Boost.Asio (super super handy).

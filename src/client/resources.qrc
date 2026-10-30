@@ -1,3 +1,5 @@
 <RCC>
-    <qresource prefix="/"/>
+    <qresource prefix="/asset">
+        <file>Launch.qml</file>
+    </qresource>
 </RCC>

@@ -2,6 +2,9 @@
 # 注意：qt_add_executable 会自动处理 moc 等机制
 qt_add_executable(dechat_client
     main.cpp
+    main.qml
+    resources.qrc
+    Launch.qml
 )
 
 # ==================== QML 模块配置 ====================

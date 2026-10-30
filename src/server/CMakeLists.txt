@@ -1,12 +1,11 @@
 # ==================== 服务端可执行目标 ====================
 add_executable(dechat_server
     main.cpp
-    Server.cpp
     Server.hpp
 )
-target_compile_options(dechat_server PRIVATE
-    -finput-charset=UTF-8 -fexec-charset=UTF-8
-)
+# target_compile_options(dechat_server PRIVATE
+#     -finput-charset=UTF-8 -fexec-charset=GBK
+# )
 # ==================== 头文件路径 ====================
 target_include_directories(dechat_server PRIVATE
     ${MINGW_ROOT}/opt/include   # OpenSSL 头文件
